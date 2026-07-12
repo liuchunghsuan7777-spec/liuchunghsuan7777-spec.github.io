@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0d9488" />
+<title>무릎 재활 안내 · KneeCare</title>
+<style>
+  :root{--bg:#f5f7fa;--card:#fff;--txt:#1a2a3a;--sub:#5b6b7b;--brand:#0d9488;--brandd:#0b7a70;--line:#e3e9ef;--warn:#e11d48;--ok:#16a34a}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"AppleSDGothicNeo",-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 80px}
+  header{background:linear-gradient(135deg,#0d9488,#0891b2);color:#fff;padding:22px 16px;text-align:center}
+  header h1{margin:0;font-size:22px;letter-spacing:-.3px}
+  header p{margin:4px 0 0;font-size:13px;opacity:.9}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0;box-shadow:0 1px 6px rgba(20,40,60,.05)}
+  h2{font-size:17px;margin:0 0 12px}
+  .sub{color:var(--sub);font-size:14px}
+  label{display:block;font-size:14px;font-weight:600;margin:14px 0 6px}
+  select,input[type=text]{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:#fbfcfe}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .chip{border:1px solid var(--line);background:#fbfcfe;border-radius:10px;padding:9px 13px;font-size:14px;cursor:pointer;user-select:none}
+  .chip.on{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+  button.primary{width:100%;margin-top:18px;padding:15px;border:0;border-radius:12px;background:var(--brand);color:#fff;font-size:16px;font-weight:800;cursor:pointer}
+  button.primary:active{background:var(--brandd)}
+  button.ghost{background:#eef4f4;color:var(--brand);border:1px solid #cfe6e3}
+  .ex{border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0;background:#fff}
+  .ex.done{background:#f0fdf4;border-color:#bbf7d0}
+  .ex h3{margin:0 0 4px;font-size:16px}
+  .ex .meta{font-size:13px;color:var(--brand);font-weight:700}
+  .ex dl{margin:10px 0 0;font-size:14px}
+  .ex dt{font-weight:700;margin-top:8px;color:#334}
+  .ex dd{margin:2px 0 0;color:var(--sub)}
+  .ex .stop{color:var(--warn);font-weight:600}
+  .row{display:flex;gap:10px;align-items:center;margin-top:12px}
+  .timer{font-variant-numeric:tabular-nums;font-size:20px;font-weight:800;min-width:64px;text-align:center}
+  .check{margin-left:auto;display:flex;align-items:center;gap:6px;font-weight:700;cursor:pointer}
+  .redflag{background:#fff1f2;border:1px solid #fecdd3;border-radius:14px;padding:14px 16px;margin:14px 0}
+  .redflag b{color:var(--warn)}
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;margin-top:8px}
+  .cal div{padding:8px 0;border-radius:8px;background:#f0f4f7;font-size:13px}
+  .cal div.hit{background:var(--ok);color:#fff;font-weight:800}
+  .nrs{display:flex;gap:5px;flex-wrap:wrap}
+  .nrs button{flex:1;min-width:34px;padding:8px 0;border:1px solid var(--line);background:#fbfcfe;border-radius:8px;font-weight:700;cursor:pointer}
+  .nrs button.sel{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .disc{font-size:12px;color:var(--sub);text-align:center;padding:20px 8px 40px;line-height:1.5}
+  .linkbox{word-break:break-all;background:#f0f4f7;border-radius:10px;padding:12px;font-size:13px;margin-top:10px}
+  .hide{display:none}
+  .toggle{display:flex;gap:8px;margin:14px 0}
+  .toggle button{flex:1;padding:10px;border:1px solid var(--line);background:#fff;border-radius:10px;font-weight:700;cursor:pointer;color:var(--sub)}
+  .toggle button.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+</style>
+</head>
+<body>
+<header>
+  <h1>🦵 무릎 재활 안내</h1>
+  <p>정형외과 처방 기반 홈 운동 · 서버 없이 안전하게</p>
+</header>
+<div class="wrap">
+
+  <!-- 역할 선택 -->
+  <div class="card" id="roleCard">
+    <h2>어떻게 오셨나요?</h2>
+    <div class="toggle">
+      <button id="btnPatient" class="on">🏃 환자 — 내 운동 하기</button>
+      <button id="btnDoctor">🩺 의사 — 처방 만들기</button>
+    </div>
+    <p class="sub" id="roleHint">환자용 링크를 받으셨다면 그 링크를 열면 바로 오늘의 운동이 나옵니다.</p>
+  </div>
+
+  <!-- 의사: 처방 생성 -->
+  <div class="card hide" id="doctorCard">
+    <h2>처방 만들기</h2>
+    <p class="sub">아래는 <b>일반적인 무릎 재활 템플릿</b>입니다. 실제 사용 전 원장님이 내용을 검토·수정하세요.</p>
+    <label>재활 단계</label>
+    <div class="chips" id="stage">
+      <div class="chip on" data-v="early">초기 (수술직후·급성)</div>
+      <div class="chip" data-v="mid">중기 (근력회복)</div>
+      <div class="chip" data-v="late">후기 (기능강화)</div>
+    </div>
+    <label>통증 정도</label>
+    <div class="chips" id="pain">
+      <div class="chip on" data-v="low">경미</div>
+      <div class="chip" data-v="mid">보통</div>
+      <div class="chip" data-v="high">심함(운동 최소화)</div>
+    </div>
+    <label>환자 이름 (선택)</label>
+    <input type="text" id="pname" placeholder="예: 홍길동 님" />
+    <button class="primary" id="genBtn">처방 링크 생성</button>
+    <div id="linkResult" class="hide">
+      <p class="sub" style="margin-top:16px"><b>✅ 처방 링크</b> — 환자에게 문자/카톡으로 보내세요:</p>
+      <div class="linkbox" id="linkText"></div>
+      <div class="row">
+        <button class="primary ghost" id="copyBtn" style="margin-top:0">🔗 링크 복사</button>
+        <button class="primary ghost" id="previewBtn" style="margin-top:0">👁 미리보기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 환자: 오늘의 루틴 -->
+  <div id="patientView" class="hide">
+    <div class="card">
+      <h2 id="greet">오늘의 재활 운동</h2>
+      <p class="sub" id="rxinfo"></p>
+    </div>
+
+    <!-- 통증 기록 -->
+    <div class="card">
+      <h2>운동 전 통증 기록</h2>
+      <p class="sub">지금 무릎 통증 정도 (0=없음 ~ 10=매우 심함)</p>
+      <div class="nrs" id="painPre"></div>
+    </div>
+
+    <div class="redflag">
+      <b>⚠️ 이런 증상이면 즉시 중단하고 병원에 연락하세요</b>
+      <div class="sub" style="margin-top:6px">갑작스러운 심한 통증·붓기, 무릎이 꺾이거나 힘이 빠짐, 열감·발열, 종아리 부종·통증, 운동 후에도 가라앉지 않는 통증.</div>
+    </div>
+
+    <div id="exList"></div>
+
+    <!-- 운동 후 통증 -->
+    <div class="card">
+      <h2>운동 후 통증 기록</h2>
+      <div class="nrs" id="painPost"></div>
+    </div>
+
+    <!-- 주간 수행 -->
+    <div class="card">
+      <h2>이번 주 수행</h2>
+      <div class="cal" id="cal"></div>
+      <button class="primary" id="doneBtn" style="margin-top:14px">✅ 오늘 운동 완료 기록</button>
+    </div>
+  </div>
+
+  <div class="disc">
+    ※ 본 안내는 <b>교육·안내용</b>이며 의학적 진단·치료를 대체하지 않습니다. 통증 기록은 이 기기에만 저장되며(localStorage) 서버로 전송되지 않습니다. 운동은 담당 의사의 지시를 우선하세요.
+    <br><br>
+    <a href="guides/">건강가이드</a> · <a href="pages/about.html">소개</a> · <a href="pages/privacy.html">개인정보처리방침</a> · <a href="pages/contact.html">연락처</a> · <a href="pages/terms.html">이용약관</a>
+  </div>
+</div>
+
+<script>
+// ── 운동 템플릿 (의사 검토·수정 대상. 표준 무릎 재활 운동) ──
+const EX = {
+  quadset:{n:"대퇴사두근 등척성 운동 (Quad set)",m:"허벅지 앞 근육 활성화·위축 방지",how:"다리를 편 채 무릎 뒤를 바닥으로 지그시 눌러 허벅지에 힘, 5초 유지 후 이완.",err:"숨을 참거나 엉덩이를 들지 않기.",stop:"무릎 앞쪽 날카로운 통증 시 중단.",sets:"10회 × 3세트",sec:5},
+  slr:{n:"누워서 다리 들기 (Straight leg raise)",m:"허벅지 근력·무릎 안정성",how:"한쪽 무릎은 세우고, 반대 다리는 편 채 약 30cm 들어 3초 유지 후 천천히 내림.",err:"무릎을 구부리거나 반동 사용 금지.",stop:"허리·무릎 통증 시 중단.",sets:"10회 × 3세트",sec:3},
+  heel:{n:"발뒤꿈치 밀기 (Heel slide)",m:"무릎 굽힘 각도(ROM) 회복",how:"누워서 발뒤꿈치를 엉덩이 쪽으로 천천히 당겨 무릎을 굽혔다 편다.",err:"통증을 참으며 무리하게 굽히지 않기.",stop:"찌르는 통증·붓기 시 중단.",sets:"10회 × 2세트",sec:0},
+  calf:{n:"종아리 스트레칭",m:"발목·종아리 유연성",how:"벽을 짚고 한 발 뒤로 뻗어 뒤꿈치를 바닥에 붙인 채 20초 유지.",err:"뒤꿈치가 뜨지 않게.",stop:"아킬레스·종아리 통증 시 중단.",sets:"20초 × 3회",sec:20},
+  wallsit:{n:"벽 스쿼트 (Wall sit)",m:"허벅지·둔근 근력 강화",how:"등을 벽에 대고 무릎이 발끝을 넘지 않게 살짝 앉아 유지.",err:"무릎을 90도 이상 깊게 굽히지 않기(초기 금기).",stop:"무릎 앞·슬개골 통증 시 중단.",sets:"15초 × 3회",sec:15},
+  step:{n:"낮은 계단 오르기 (Step-up)",m:"실생활 기능·균형",how:"낮은 발판에 아픈 다리부터 천천히 올라섰다 내려온다.",err:"반동·급하게 하지 않기, 난간 잡고.",stop:"불안정·통증 시 중단.",sets:"10회 × 2세트",sec:0},
+  balance:{n:"한 발 균형 서기",m:"고유수용감각·낙상예방",how:"안전한 곳에서 아픈 다리로 20초 서 있기(필요시 벽 짚기).",err:"넘어질 위험 있으면 반드시 지지물.",stop:"어지러움·불안정 시 중단.",sets:"20초 × 3회",sec:20},
+};
+const PLAN = {
+  early:["quadset","slr","heel","calf"],
+  mid:["quadset","slr","heel","wallsit","calf"],
+  late:["slr","wallsit","step","balance","calf"],
+};
+const $=(s)=>document.querySelector(s);
+
+// ── 역할 토글 ──
+$("#btnPatient").onclick=()=>setRole("patient");
+$("#btnDoctor").onclick=()=>setRole("doctor");
+function setRole(r){
+  $("#btnPatient").classList.toggle("on",r==="patient");
+  $("#btnDoctor").classList.toggle("on",r==="doctor");
+  $("#doctorCard").classList.toggle("hide",r!=="doctor");
+  $("#roleHint").textContent = r==="doctor" ? "단계·통증을 고르면 운동이 자동 구성됩니다." : "환자용 링크를 받으셨다면 그 링크를 열면 바로 오늘의 운동이 나옵니다.";
+}
+// 칩 단일선택
+function chipGroup(sel){ $(sel).addEventListener("click",e=>{const c=e.target.closest(".chip");if(!c)return;$(sel).querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));c.classList.add("on");});}
+chipGroup("#stage"); chipGroup("#pain");
+function pick(sel){return $(sel+" .chip.on").dataset.v;}
+
+// ── 처방 생성 ──
+$("#genBtn").onclick=()=>{
+  let ex = PLAN[pick("#stage")].slice();
+  if(pick("#pain")==="high") ex = ex.filter(k=>["quadset","slr","heel"].includes(k)); // 통증 심하면 최소화
+  const rx = {s:pick("#stage"),p:pick("#pain"),n:$("#pname").value.trim(),e:ex};
+  const code = btoa(unescape(encodeURIComponent(JSON.stringify(rx))));
+  const url = location.origin+location.pathname+"#rx="+code;
+  $("#linkText").textContent=url;
+  $("#linkResult").classList.remove("hide");
+  $("#copyBtn").onclick=()=>{navigator.clipboard.writeText(url);$("#copyBtn").textContent="✅ 복사됨";};
+  $("#previewBtn").onclick=()=>{location.hash="rx="+code;location.reload();};
+};
+
+// ── 환자 뷰 렌더 ──
+function loadRx(){
+  const m=location.hash.match(/rx=([^&]+)/); if(!m)return null;
+  try{return JSON.parse(decodeURIComponent(escape(atob(m[1]))));}catch{return null;}
+}
+function nrs(el,key){
+  el.innerHTML="";
+  for(let i=0;i<=10;i++){const b=document.createElement("button");b.textContent=i;
+    b.onclick=()=>{[...el.children].forEach(x=>x.classList.remove("sel"));b.classList.add("sel");
+      localStorage.setItem(key+"_"+today(),i);};
+    if(localStorage.getItem(key+"_"+today())==String(i))b.classList.add("sel");
+    el.appendChild(b);}
+}
+function today(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
+function renderPatient(rx){
+  $("#roleCard").classList.add("hide"); $("#doctorCard").classList.add("hide");
+  $("#patientView").classList.remove("hide");
+  $("#greet").textContent = (rx.n? rx.n+"님, ":"")+"오늘의 재활 운동";
+  const stage={early:"초기",mid:"중기",late:"후기"}[rx.s]||"";
+  $("#rxinfo").textContent = `재활 단계: ${stage} · 운동 ${rx.e.length}가지 · 무리하지 말고 통증 없는 범위에서.`;
+  nrs($("#painPre"),"painPre"); nrs($("#painPost"),"painPost");
+  // 운동 카드
+  const list=$("#exList"); list.innerHTML="";
+  rx.e.forEach((k,i)=>{const e=EX[k];if(!e)return;
+    const div=document.createElement("div");div.className="ex";
+    div.innerHTML=`<div class="meta">${e.sets}</div><h3>${i+1}. ${e.n}</h3>
+      <dl><dt>목적</dt><dd>${e.m}</dd><dt>방법</dt><dd>${e.how}</dd>
+      <dt>흔한 실수</dt><dd>${e.err}</dd><dt class="stop">중단 기준</dt><dd class="stop">${e.stop}</dd></dl>
+      <div class="row">${e.sec?`<div class="timer" data-s="${e.sec}">${e.sec}s</div><button class="chip startT">▶ 시작</button>`:`<span class="sub">천천히 정확하게</span>`}
+      <label class="check"><input type="checkbox" class="doneChk"> 완료</label></div>`;
+    list.appendChild(div);
+    const chk=div.querySelector(".doneChk");
+    chk.checked = localStorage.getItem("ex_"+today()+"_"+k)==="1";
+    if(chk.checked)div.classList.add("done");
+    chk.onchange=()=>{div.classList.toggle("done",chk.checked);localStorage.setItem("ex_"+today()+"_"+k,chk.checked?"1":"0");};
+    const t=div.querySelector(".timer"),sb=div.querySelector(".startT");
+    if(t&&sb){sb.onclick=()=>{let s=+t.dataset.s;sb.disabled=true;const iv=setInterval(()=>{s--;t.textContent=s+"s";if(s<=0){clearInterval(iv);t.textContent="✓ 완료";sb.disabled=false;t.dataset.s=e.sec;setTimeout(()=>t.textContent=e.sec+"s",1500);}},1000);};}
+  });
+  renderCal();
+  $("#doneBtn").onclick=()=>{localStorage.setItem("day_"+today(),"1");renderCal();$("#doneBtn").textContent="✅ 오늘 완료됨";};
+}
+function renderCal(){
+  const cal=$("#cal");cal.innerHTML="";const names=["일","월","화","수","목","금","토"];
+  const now=new Date();const start=new Date(now);start.setDate(now.getDate()-now.getDay());
+  for(let i=0;i<7;i++){const d=new Date(start);d.setDate(start.getDate()+i);
+    const key="day_"+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+    const div=document.createElement("div");div.textContent=names[i];
+    if(localStorage.getItem(key)==="1"){div.classList.add("hit");div.textContent="✓";}
+    cal.appendChild(div);}
+}
+
+// ── 진입 ──
+const rx=loadRx();
+if(rx) renderPatient(rx); else setRole("patient");
+</script>
+</body>
+</html>
